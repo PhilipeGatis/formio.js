@@ -12,12 +12,18 @@ const EditFormUtils = {
       if (objValue.key === srcValue.key) {
         // Create complete objects by including missing keys.
         _.each(objValue, (value, prop) => {
-          if (!srcValue.hasOwnProperty(prop)) {
+          if (objValue.override) {
+            srcValue[prop] = value;
+          }
+          else if (!srcValue.hasOwnProperty(prop)) {
             srcValue[prop] = value;
           }
         });
         _.each(srcValue, (value, prop) => {
-          if (!objValue.hasOwnProperty(prop)) {
+          if (srcValue.override) {
+            srcValue[prop] = value;
+          }
+          else if (!objValue.hasOwnProperty(prop)) {
             objValue[prop] = value;
           }
         });
